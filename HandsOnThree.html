@@ -1,0 +1,26 @@
+<!doctype html>
+<html ng-app="myApp">
+    <head>
+        <script src="node_modules/angular/angular.min.js"></script>
+        <script>
+            let JsObject = {
+                "name":"Andul Rahman",
+                "email":"abdulrahman@gmail.com",
+                "mobile":"9380019571"
+            };
+            var app=angular.module("myApp",[]);
+            app.controller("myController",function($scope){
+            $scope.name=JsObject["name"];
+            $scope.email=JsObject["email"];
+            $scope.mobile=JsObject["mobile"];
+            });
+            </script>
+    </head>
+    <body ng-controller="myController">
+        <div style="border:3px solid black ; margin:0 50vh;padding:40px;">
+            <h2>Name : {{name}}</h2>
+            <h2>Email : {{email}}</h2>
+            <h2>Mobile : {{mobile}}</h2>
+        </div>
+    </body>
+</html>
