@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+
+<head>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller("myController", function ($scope) {
+            var todos = [{
+                desc: "Wash cloths",
+                stats: false
+            },
+            {
+                desc: "Do lunch",
+                stats: true
+            },
+            {
+                desc: "Go to School",
+                stats: false
+            }
+            ];
+            $scope.todos = todos;
+
+            $scope.removeTodo = function () {
+                $scope.todos.pop();}
+            $scope.addNewtodo = function (description, stats) {
+                $scope.todos.push({ desc: description, stats: stats });
+            }
+        });
+    </script>
+</head>
+
+<body ng-app="myApp" ng-controller="myController">
+    <div class="container my-3">
+        <h1>Abdul's Todo List <span class="badge bg-secondary">{{todos.length}}</span></h1>
+        
+        <label for="desc">Enter task to do</label>
+        <input type="text" name="desc" ng-model="description"><br>
+        <label for="stats" class="my-3">Enter the status</label>
+        <input type="radio" name="stats" value="true" ng-model="stats"><label for="stats">True</label>
+        <input type="radio" name="stats" value="false" ng-model="stats"><label for="stats">False</label>
+<br>
+        <button class="btn btn-primary my-3" ng-click="addNewtodo(description,stats)">Add New Todo</button>
+        <button class="btn btn-primary my-3" ng-click="removeTodo()">Remove Todo</button>
+
+        <br>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider" ng-repeat="todo in todos">
+                <tr>
+                    <td>{{todo.desc}}</td>
+                    <td>{{todo.stats}}</td>
+                </tr>
+            </tbody>
+    </div>
+    </table>
+</body>
+
+</html>
