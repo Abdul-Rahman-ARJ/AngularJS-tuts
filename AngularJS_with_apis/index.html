@@ -11,7 +11,16 @@
 </head>
 
 <body ng-controller="MainController">
+    <h4>{{error | json}}</h4>
+    <!-- <h1>{{Pproducts}}</h1> -->
+
+
+
     <div class="container my-3">
+
+<button type="text" class="btn btn-primary mx-3" ng-click="get()" >Get </button>
+<input type="text" ng-model="data" value="laptops"/>
+<button type="text" class="btn btn-primary" ng-click="post(data)" >Post </button>
     <table  class="table table-striped">
         <thead>
             <tr>
@@ -27,7 +36,6 @@
     
 </div>
 
-<!-- {{products | json}} -->
 </body>
 
 </html>
