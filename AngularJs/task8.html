@@ -90,8 +90,10 @@
             <tbody class="table-group-divider" ng-repeat="todo in todos">
                 <tr>
                     <td>{{todo.desc}}</td>
-                    <td><input type="checkbox" name="stats" id="stats" ng-checked="{{todo.stats}}" ng-model="stats"
-                            id="{{todo.stats}}" ng-change="onChange(todo.stats)"> </td>
+                    <td>
+                        <input type="checkbox" name="stats" id="stats" ng-checked="{{todo.stats}}" ng-model="stats"
+                            id="{{todo.stats}}" ng-change="onChange(todo.stats)">
+                    </td>
                 </tr>
             </tbody>
     </div>

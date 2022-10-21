@@ -1,0 +1,127 @@
+<html ng-app="exampleApp">
+
+<head>
+    <title>Filters</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <script>
+        angular.module("exampleApp", [])
+            .controller("defaultCtrl", function ($scope) {
+                $scope.employee = [
+                    // Id,firstName,lastName,salary,dateOfJoining,city,mobile,email,department
+                    { id: 1, fname: "Abdul", lname: "Rahman", salary: 50000, doj: "10-5-2021", city: "USA", mobile: 9380019571, email: "abdul@mail.com", dept: "DevOps" },
+                    { id: 2, fname: "CHRISTINE", lname: "HAAS", salary: 150000, doj: "10-8-2020", city: "Canada", mobile: 8200019571, email: "CHRISTINE@mail.com", dept: "Services" },
+                    { id: 3, fname: "MICHAEL", lname: "THOMPSON", salary: 150000, doj: "07-5-2002", city: "Brazil", mobile: 9800019571, email: "MICHAEL@mail.com", dept: "Implementation" },
+                    { id: 4, fname: "SALLY", lname: "KWAN", salary: 150000, doj: "10-5-2016", city: "Germany", mobile: 9007019571, email: "SALLY@mail.com", dept: "Buissness Devlopment" },
+                    { id: 5, fname: "JOHN", lname: "GEYER", salary: 150000, doj: "10-5-2017", city: "England", mobile: 9890019571, email: "JOHN@mail.com", dept: "Product" },
+                    { id: 6, fname: "IRVING", lname: "STERN", salary: 150000, doj: "10-5-2013", city: "USA", mobile: 9046019571, email: "IRVING@mail.com", dept: "IT" },
+                    { id: 7, fname: "EVA", lname: "PULASKI", salary: 150000, doj: "10-8-2019", city: "China", mobile: 9043019571, email: "EVA@mail.com", dept: "Automation" },
+                    { id: 8, fname: "EILEEN", lname: "HENDERSON", salary: 150000, doj: "10-5-2022", city: "Australia", mobile: 7800019571, email: "EILEEN@mail.com", dept: "Testing" },
+                    { id: 9, fname: "THEODORE", lname: "SPENSER", salary: 150000, doj: "10-5-2002", city: "Den Mark", mobile: 7830019571, email: "THEODORE@mail.com", dept: "Software" },
+                    { id: 10, fname: "HEATHER", lname: "NICHOLLS", salary: 150000, doj: "11-8-2006", city: "Austria", mobile: 9833019571, email: "HEATHER@mail.com", dept: "Infra" }
+                ];
+                $scope.chname = '';
+                $scope.expr = '';
+
+                var d2 = new Date();
+                var expArray = [];
+                for (let i of $scope.employee) {
+                    var d = new Date(i.doj);
+                    expArray.push(d2.getFullYear() - d.getFullYear());
+                }
+
+                $scope.jsonArray = expArray;
+                $scope.sortFname = () => {
+                    $scope.chname = "fname";
+                }
+
+                $scope.uCity = "";
+                $scope.uCityArray = [];
+                for (let i of $scope.employee) {
+                    $scope.uCityArray.push(i.city);
+                }
+
+                $scope.limitVal = "10";
+                $scope.limitRange = [];
+                for (var i = (0 - $scope.employee.length);
+                    i <= $scope.employee.length; i++) {
+                    $scope.limitRange.push(i.toString());
+                }
+
+            });
+    </script>
+</head>
+
+<body ng-controller="defaultCtrl">
+
+    <div class="container my-3">
+        <div class="my-3"> </div>
+        <div class="my-3"> </div>
+        <div class="my-3"> </div>
+        <h3>
+            Employee Size <span class="text-primary">{{employee.length}}</span>
+        </h3>
+
+        <input type="text" class="btn btn-primary my-3" value="Sort by First Name" ng-click="sortFname()">
+        <div class="container my-3">
+            Limit: <select ng-model="limitVal" ng-options="item for item in limitRange"></select>
+        </div>
+        <div class="container my-3">
+            Filter By Dept: <select ng-model="uCity" ng-options="item for item in uCityArray"></select>
+        </div>
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+                <!-- Id,firstName,lastName,salary,dateOfJoining,city,mobile,email,department -->
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Salary</th>
+                    <th>Date Of Join</th>
+                    <th>City</th>
+                    <th>Mobile No.</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Experience</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="e in employee | orderBy:chname | limitTo:limitVal | filter:{city: uCity}">
+                    <td>{{e.id}}</td>
+                    <td>{{e.fname | uppercase}}</td>
+                    <td>{{e.lname | uppercase}}</td>
+                    <td>{{e.salary | currency}}</td>
+                    <td>{{e.doj | date }} </td>
+                    <td>{{e.city}}</td>
+                    <td>{{e.mobile}}</td>
+                    <td>{{e.email}}</td>
+                    <td>{{e.dept}}</td>
+                    <td>{{jsonArray[e.id-1]}} years</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+                <!-- Id,firstName,lastName,salary,dateOfJoining,city,mobile,email,department -->
+                <tr>
+                    <h1>Employee Data in JSON</h1>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="e in employee">
+                    <td>{{e | json}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</body>
+
+</html>
